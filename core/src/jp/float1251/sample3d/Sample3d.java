@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
+import com.badlogic.gdx.math.Vector3;
 
 public class Sample3d extends ApplicationAdapter {
     ModelBatch batch;
@@ -23,6 +24,8 @@ public class Sample3d extends ApplicationAdapter {
     private ModelInstance instance;
     private Environment environment;
     private CameraInputController cameraController;
+    private Model sphere;
+    private ModelInstance sphereInstance;
 
     @Override
     public void create() {
@@ -48,6 +51,11 @@ public class Sample3d extends ApplicationAdapter {
                 VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
         instance = new ModelInstance(model);
 
+        sphere = builder.createSphere(5f, 5f, 5f, 20, 20,
+                new Material(ColorAttribute.createDiffuse(Color.MAGENTA)),
+                VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+        sphereInstance = new ModelInstance(sphere);
+        sphereInstance.transform.translate(new Vector3(8, 0, 0));
 
     }
 
@@ -58,6 +66,8 @@ public class Sample3d extends ApplicationAdapter {
 
         batch.begin(camera);
         batch.render(instance, environment);
+        batch.render(sphereInstance, environment);
         batch.end();
     }
+
 }
